@@ -6,6 +6,9 @@
 #include <string>
 #include <cctype>
 
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "../doctest.h"
+
 bool is_palindrome(const std::string& s)
 {
     // NOTE pass string by reference (valid for any object)
@@ -44,6 +47,12 @@ bool is_palindrome(const std::string& s)
      */
 }
 
+TEST_CASE("testing is_palindrome()") {
+    CHECK(is_palindrome("abc") == false);
+    CHECK(is_palindrome("abccba") == true);
+}
+
+#ifdef DOCTEST_CONFIG_DISABLE
 int main()
 {
     std::string s;
@@ -61,4 +70,14 @@ int main()
 
     return 0;
 }
-
+#else
+int main()
+{
+    doctest::Context context;
+    int res = context.run();
+    if (context.shouldExit())
+        return res;
+    
+    return res;
+}
+#endif
