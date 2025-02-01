@@ -77,7 +77,7 @@ int main()
     int res = context.run();
     if (context.shouldExit())
         return res;
-    
+
     return res;
 }
 #endif

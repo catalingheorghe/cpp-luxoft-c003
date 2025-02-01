@@ -2,16 +2,18 @@
 
 #include <iostream>
 #include <vector>
+// vector is safer/better than int arr[] (downside: a bit more memory)
 
 void reverse_it(std::vector<int>& v)
 {
-    // note the & above in the parameter; w/o it, no reverse
+    // NOTE w/o reference (&) above, copy is passed, not reversed
 
-    for (int i = 0, j = v.size() - 1; i < j; i++, j--) {
+    for (size_t i = 0, j = v.size() - 1; i < j; i++, j--) {
         int tmp;
         tmp = v[i];
         v[i] = v[j];
         v[j] = tmp;
+        // or builtin "swap()"
     }
 
     return;
@@ -19,19 +21,26 @@ void reverse_it(std::vector<int>& v)
 
 void print_vector(const std::vector<int>& v)
 {
+    std::cout << "Vector: ";
     for (auto i : v) {
         std::cout << i << " ";
     }
-    std::cout << "\n";
+    std::cout << "\n"; // or "cout << endl"
+    // NOTE printf is standard C, not really cpp; cpp offers alternatives
 }
 
 int main()
 {
-    std::vector<int> v{1, 2, 3};
-    //int n;
+    std::vector<int> v{};
+    size_t n = 0;
 
-    //std::cout << "num elements: ";
-    //std::cin >> n;
+    std::cout << "num elements: ";
+    std::cin >> n;
+    for (size_t i = 0; i < n; i++) {
+        int val = 0;
+        std::cin >> val;
+        v.push_back(val);
+    }
  
     reverse_it(v);
 
