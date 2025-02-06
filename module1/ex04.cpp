@@ -1,8 +1,9 @@
 /* Find second largest number in an array */
 
 #include <iostream>
-#include <vector>
+//#include <vector>
 // vector is safer/better than int arr[] (downside: a bit more memory)
+#include <limits> // for smallest int; "climits" would be INT_MIN
 
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "../doctest.h"
@@ -12,8 +13,14 @@ using namespace std;
 int second_largest(int a[], size_t n)
 {
     if (n == 0) { return 0; }
+    // also, if only one element, there is no second largest
+    
+    // we must sort it for our alg to work
+    std::sort(a, a + n);
 
-    int max = a[0], second = a[0];
+    int max = a[0];
+    int second = a[0]; 
+    // numeric_limits<int>::min() does not really work for 2 el
 
     for (size_t i = 0; i < n; i++ ) {
         if (a[i] > max) {
@@ -26,10 +33,12 @@ int second_largest(int a[], size_t n)
 }
 
 TEST_CASE("testing second_largest()") {
-    int a1[] = { 1, 2, 3};
+    int a1[] = { 1, 2, 3 };
     CHECK(second_largest(a1, 3) == 2);
     int a2[] = { 1, 1 };
     CHECK(second_largest(a2, 2) == 1);
+    int a3[] = { 6, 5, 4 };
+    CHECK(second_largest(a3, 3) == 5);
 }
 
 void print_array(int a[], size_t n)

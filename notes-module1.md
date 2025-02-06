@@ -224,6 +224,22 @@ Address arithmetic (like in C). Increase in sizeof() bytes, depending on type
 of data the pointer points to.
  - can be confusing, can go over array bounds, harder to read ...
 
+Algorithm functions on collections, but also on arrays
+
+```
+#include <algorithm>
+
+std::reverse(v.begin(), v.end());  // reverse a vector
+std::sort(arr, arr + n);           // sort an array
+
+// rotate, accumulate, next_permutation, erase ...
+
+```
+
+The above are functions from the C++ Standard Library, which we can consider
+very well written and tested. Usually recommended to use them, not to reinvent
+them; Could even be optimized for the specific platform.
+
 #### strings
 
 std::basic_string - template type for sequence of any characters
@@ -236,10 +252,14 @@ keeps track of capacity (total amount of memory allocated to the string)
 Operations examples
 
 ```
-std::string s1 = "hello"
-s1[0]
-s1.size(), s1.length() // same
-s1 + " " + "world" // concatecation, + overload
+std::string s1 = "hello"  // init
+s1[0]                     // access element
+s1.size(), s1.length()    // same
+s1 + " " + "world"        // concatecation, + overload
+prefix = str.substr(0, i) // extract a substring (allocs memory)
+str.empty()               // is string ""?
+
+sort(s.begin(), s.end())  // sort a string
 ```
 
 get C style string (which is supported), NULL terminated char array
@@ -300,6 +320,9 @@ Terms from C++ standard: "undefined behaviour", "unspecificed behaviour".
 When compiler cannot guarantee how the behaviour observed on a given platform
 does not match the way the could would run on a "perfect" C++ standard virtual
 machine.
+
+Lambdas (anon functions) - to avoid namespace pollution, to make code more
+readable.
 
 ### Resources
 
