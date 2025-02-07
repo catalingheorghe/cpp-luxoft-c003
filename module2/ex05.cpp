@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void customSort(vector<int> &v, bool (compare)(int, int))
+void customSort(vector<int> &v, bool (*compare)(int, int))
 {
     if (compare == NULL) return;
 
