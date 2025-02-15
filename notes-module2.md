@@ -228,7 +228,7 @@ can iterate over an enum class, by defining an operator ++
 enum class day { Mon, Tue, ... };
 
 day& operator++(day& d) {
-    return d = day(ind(d) + 1));
+    return d = day(int(d) + 1));
 }
 // NOTE: can add a not_a_day sentinel value as last to hit the end
 
