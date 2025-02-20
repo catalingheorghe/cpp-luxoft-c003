@@ -67,7 +67,7 @@ int z3{a + b}; // error - narrowing conversion flagged
 ```
 
 Initializer list
- - commonly used to initialized containers
+ - commonly used to initialize containers
 
 ```
 struct V {
@@ -149,7 +149,7 @@ but you can also pass the current instance to another function `bus->add(this)`
 
 #### Operator overloading
 
-Custom behavior for operators when applied to user definet classes. Allows 
+Custom behavior for operators when applied to user defined classes. Allows 
 using intuitive operators like with built-in type, making code more readable.
 
 ```
@@ -170,7 +170,7 @@ incr/decr, even member access.
 
 #### Explicit keyword
 
-For ctor, adding `explicit` tells the compiler to not user it in an implicit
+For ctor, adding `explicit` tells the compiler to not use it in an implicit
 chain of constructor conversions. 
 
 ```
@@ -194,7 +194,7 @@ Rule of three: if you need a copy ctor, copy assignment ctor, or a destructor,
 you usually need all three.
 
  - destructor - needed if a class allocates dynamic memory, for ex
- - copy ctor - to avoid shallow copies of dynamically allocates resources
+ - copy ctor - to avoid shallow copies of dynamically allocated resources
  - copy assignment operator - same
 
 ```
@@ -203,7 +203,7 @@ class P {
 private:
   T* p;
 public:
-    p(T* p_) : p{p_} { };
+  P(T* p_) : p{p_} { };
   
   ~P() { delete p; }; // destructor
   
@@ -273,7 +273,7 @@ P(P&& p_) : p(p_.p) { // init new with resource pointer from source
 // P<int> tmp = std::move(a);
 
 P& operator=(P&& p_) {
-  // delete p ??? needed or not (to release current resource 
+  // delete p ??? needed or not (to release current resource)
   p = p_.p;
   p_.p = nullptr;
   return *this;
@@ -391,6 +391,20 @@ class B : virtual public A {};
 class C : virtual public A {};
 class D : public B, public C {}; // only one instance of A
 ```
+
+
+Q:
+General
+ - initilizaion () vs {} vs normal "=" ; what is the underlying difference, best practices
+ - what is the rationale for the ctor syntax "ctor(...) : member(m), member(n) { } " instead of setting the members inside the ctor body
+   (is it `initializer_list` related?)
+ - override vs no override, what is the difference?
+ - a bit of recap or more explanations about "move semantics"
+ - in the move assignment operator, shouldn't the resources be "deleted" first, before copying the pointer from the argument?
+ - can you implement abstract classes, pure interfaces, with no method implementation
+ 
+ 
+ 
 
 
 
