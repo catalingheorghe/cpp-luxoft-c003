@@ -17,6 +17,8 @@ using UPtrM = unique_ptr<map<string, int>>;
 using P = void(*) (int, int);
 ```
 
+typedef was designed for C, not convienent for complex types (e.g. templates)
+
 #### Structures
 
 struct = related data grouped together
@@ -120,6 +122,11 @@ But different default access levels (in `class` by default private).
 
 Struct -> typically a data structure, access to data it holds
 Class  -> encapsulate data and provide controlled access
+(note that structs can also do inheritance)
+(struct or class - if there are additional rules between members => class;
+ if there are no rules => can be struct; )
+
+Encapsulation helps to control dependencies between different parts of the code.
 
 Pointer to an instance of a class
 
@@ -146,6 +153,10 @@ implicit pointer available in non-static member functions
 
 `this->name` can serve to show the reader that name is a member of this instance
 but you can also pass the current instance to another function `bus->add(this)`
+
+Note about public/private/protected:
+(!) usually protected only for methods, not for members; create protected access
+functions instead for use in subclasses
 
 #### Operator overloading
 
@@ -292,6 +303,10 @@ int main() {
 // after each move, the original object is left in a valid but empty state
 ```
 
+"rvalue references" - not really references, but another way to assign variables
+
+if move ctor is not defined, overloading will make it such that copy ctor is called
+
 ### Inheritance and polymorphism
 
 Inheritance - extend classes without changing their definition
@@ -404,8 +419,40 @@ General
  - can you implement abstract classes, pure interfaces, with no method implementation
  
  
- 
+Other notes:
 
+Encapsulation
+ - "getters and setters always" - not necessarily; you might not want to have a setter
+ - indeed, narrowest possible interface, which can be opened up later
+
+Interfaces
+ - there is no dedicated way to create interfaces in Cpp, not a dedicated syntax
+ - LE: you can have "pure virtual functions" - no implementation => so, yes
+ - note that "interfaces" and "inheritance" are different concepts (e.g. in Go there
+   are interfaces but not classic inheritance). E.g.: a lot of different type of objects
+   that are all "orderable", or "printable". Inheritance shows difference/specialization,
+   Interfaces shows commonality
+ - concept of "mix-in" - you can extend a class to get its functionality; powerful, but
+   can lead to a complicated design, class hierarchy
+ - Note: "pure function" in standard programming - no side-effects; but here, no body
+ 
+Polymorphism
+ - write code in terms of base class (superclass); develop code in terms of "abstractions"
+   not implementation
+ - based on virtual functions and vtable (this accounts for the difference in performance
+   between C and C++; the indirection of calls, dynamic dispatch)
+ - avoid "object slicing" - base class = sub class (without using pointers) => extra
+   variables in the "sub class" will be lost
+
+Dtor
+ - only if out object contains some managed state (pointers, OS resources etc)
+ - if you will use inheritance, dtor should be virtual
+ - (in C++14, at least no way to tell compiler that a class can't be inherited from)
+ - consider RAII - resource acquisition is initialization
+
+Java
+ - always use new when creating an object => heap
+ - in C++ you can create them on the stack as well, without "new"
 
 
 
