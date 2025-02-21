@@ -70,7 +70,8 @@ class CheckingAccount : public Account {
 public:
     using Account::Account;
 
-    // TODO override, no override, what is the difference?
+    // override, no override, what is the difference?
+    // -> tell the compiler that you want to override a function that must exist
     void withdraw(double amount) {
         if (amount <= balance) {
             balance -= amount;
@@ -115,6 +116,7 @@ int main()
     std::cout << std::endl;
 
     acc = savings; // copy into an Account object, no longer savings
+    // (!) this would be OBJECT SLICING, but there are no extra in the subclass
     acc.deposit(5000);  // 6000
     acc.withdraw(4000); // 2000
     acc.withdraw(3000); // -1000 (normal account)
