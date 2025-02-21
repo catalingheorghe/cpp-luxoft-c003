@@ -39,6 +39,7 @@ public:
         imag = c.imag;
         c.real = new double(0.0); // setting these to nullptr would mean having checks everywhere
         c.imag = new double(0.0);
+        // BUT it should be set to nulptr and expect that the object is not used anymore
     }
 
     ComplexNum& operator=(ComplexNum&& c) {

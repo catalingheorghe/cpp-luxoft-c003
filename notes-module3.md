@@ -284,7 +284,7 @@ P(P&& p_) : p(p_.p) { // init new with resource pointer from source
 // P<int> tmp = std::move(a);
 
 P& operator=(P&& p_) {
-  // delete p ??? needed or not (to release current resource)
+  delete p; // needed (to release current resource)
   p = p_.p;
   p_.p = nullptr;
   return *this;
@@ -450,6 +450,11 @@ Dtor
  - (in C++14, at least no way to tell compiler that a class can't be inherited from)
  - consider RAII - resource acquisition is initialization
 
+Initializations
+ - avoid a(1); {} are better -> transforms to initializer list; "=" still ok if ctor
+   has one argument
+ - if there are no special concerns, use a uniform approach (use {})
+ 
 Java
  - always use new when creating an object => heap
  - in C++ you can create them on the stack as well, without "new"

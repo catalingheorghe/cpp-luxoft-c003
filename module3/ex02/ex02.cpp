@@ -4,12 +4,15 @@
 #include <vector>
 
 class Account {
+// note that most conventions: public first
 protected:
+    // note that best practice: protecte access methods and private members
     int accountNumber;
     std::string owner;
     double balance;
     std::vector<std::string> transactions;
-    enum OperationType { Credit, Debit };
+    enum OperationType { Credit, Debit }; // no namespace polution because we are in class
+    // but enum class would still be nicer
 
     void logTransaction(OperationType type, double amount, double balance) {
         std::string tran = "";
@@ -20,12 +23,16 @@ protected:
         } else {
             return;
         }
+        // if there were more values, a map would be nicer and more flexible for the future
         tran += std::to_string(amount);
         tran += " (balance: ";
         tran += std::to_string(balance);
         tran += ")\n";
+        // better to use stringstreams above to make it look better
         transactions.insert(transactions.begin(), tran);
     }
+    // if this "transaction" log begins to grow in code and logic, it can be
+    // separated in another class
 
 public:
     Account (int number, std::string& name)
@@ -46,7 +53,8 @@ public:
     }
 
     void listTransactions() const {
-        for (std::string t : transactions) {
+        for (const std::string& t : transactions) {
+            // const reference above
             std::cout << t;
         }
     }
@@ -137,4 +145,7 @@ int main()
     b->deposit(1000);
     b->withdraw(2000); // still 1000
     b->print();
+
+    // or a vector of Accounts and then add different types to it
+    // call withdraw on each Account in the vector
 }

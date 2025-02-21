@@ -12,6 +12,7 @@ private:
 public:
     Matrix1D(initializer_list<int> vals) : value(vals) { }
     Matrix1D(vector<int> vals) : value(vals) { }
+    // should pass by const reference here
     
     void print() const {
         for (int v : value) { cout << v << " "; }
@@ -19,7 +20,9 @@ public:
     }
 
     Matrix1D operator+(Matrix1D m) {
+        // better to pass as constant reference
         vector<int> result_v{};
+        // more efficient to initialize to expected size to not realloc internally
 
         if (value.size() != m.value.size()) {
             throw invalid_argument("non-matching sizes");
