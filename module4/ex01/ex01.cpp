@@ -31,6 +31,7 @@ public:
         if (!fileStream || !fileStream->is_open()) {
             throw std::runtime_error("Write operation failed: file not open.");
         }
+        std::cout << "write to " << filename << std::endl; 
         (*fileStream) << data << std::endl;
         if (fileStream->fail()) {
             throw std::runtime_error("Write operation failed.");
@@ -41,11 +42,13 @@ public:
         if (!fileStream || !fileStream->is_open()) {
             throw std::runtime_error("Read operation failed: file not open.");
         }
+        std::cout << "read from " << filename << std::endl;
         fileStream->seekg(0);
         std::string line;
         while (std::getline(*fileStream, line)) {
             std::cout << line << std::endl;
         }
+        fileStream->clear();
     }
 
     void close() {
@@ -129,6 +132,13 @@ int main() {
     }
     
     fileManager.removeFile("testfile.txt");
+
+    std::cout << "use the file again: " << std::endl;
+
+    if (file) {
+        file->write("New content added via FileManager after remove.");
+        file->read();
+    }
     
     return 0;
 }

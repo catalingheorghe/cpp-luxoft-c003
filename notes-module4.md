@@ -91,6 +91,15 @@ alive forever
 To adderss this: use `weak_ptr`; make a weak ptr out of a shared one `w{p1}`
 then if you want another one `shared_ptr<A> p2 = w.lock()`
 ...?
+object A -> object B -> object C -> object A (also circular dependency)
+a weak ptr doesn't affect the ref count, it is not an owner of the object
+...?
+
+Guidelines:
+ - avoid raw pointers, use smart ptrs
+ - start with unique ptr
+ - if required, shared ptr
+ - if circular dependencies, weak ptr
 
 #### Data representation
 
@@ -215,7 +224,6 @@ try {
 
 Questions:
 
- - dynamic storage: new/delete vs malloc/free?
  - shared ptr: why are custom deallocators needed? Why isn't calling the dtor enough?
    slide 31
- -
+ - weak ptr: not clear
